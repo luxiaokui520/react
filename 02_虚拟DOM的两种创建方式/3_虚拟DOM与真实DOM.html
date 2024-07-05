@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hello_react</title>
+    <title>3_虚拟DOM与真实DOM</title>
   </head>
   <body>
     <!-- 准备好一个容器 -->
     <div id="test"></div>
+    <div id="demo"></div>
 
     <!-- 引入React核心库 -->
     <script type="text/javascript" src="../js/react.development.js"></script>
@@ -26,11 +27,21 @@
 
       // 1.创建虚拟DOM
       const VDOM = (
-        <h1>Hello, React</h1>
+        <h1 id="title">
+          <span>Hello, React</span>
+        </h1>
       ); /* 此处一定不要写引号，因为不是字符串 */
 
       // 2.渲染虚拟DOM到页面
       ReactDOM.render(VDOM, document.getElementById("test"));
+
+      console.log("虚拟DOM", VDOM); // object
+      console.log(typeof VDOM); // object
+      console.log(VDOM instanceof Object); // true
+
+      const TDOM = document.getElementById("demo");
+      console.log("真实DOM", TDOM);
+      debugger;
     </script>
   </body>
 </html>
