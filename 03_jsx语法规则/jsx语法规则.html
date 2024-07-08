@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jsx语法规则</title>
+    <style>
+      .title {
+        background-color: bisque;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 准备好一个容器 -->
+    <div id="test"></div>
+
+    <!-- 引入React核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+
+    <!-- 引入react-dom， 用于支持react操作dom -->
+    <script
+      type="text/javascript"
+      src="../js/react-dom.development.js"
+    ></script>
+
+    <!-- 引入Babel，用于将jsx转化为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      /* 此处一定要写babel*/
+
+      const myId = "AtGuiGu";
+      const myData = "Hello, React";
+
+      // 1.创建虚拟DOM
+      const VDOM = (
+        <div>
+          <h2 className="title" id={myId.toLowerCase()}>
+            <span style={{ color: "white", fontSize: "29px" }}>{myData}</span>
+          </h2>
+          <h2 className="title" id={myId.toLowerCase() + "2"}>
+            <span style={{ color: "white", fontSize: "29px" }}>{myData}</span>
+          </h2>
+          {/* 组件未定义，会报错 */}
+          <Good /* 组件未定义，会报错 */ />
+        </div>
+      ); /* 此处一定不要写引号，因为不是字符串 */
+
+      // 2.渲染虚拟DOM到页面
+      ReactDOM.render(VDOM, document.getElementById("test"));
+
+      /* 
+      jsx语法规则
+      1. 定义虚拟DOM时，不要写引号
+      2. 虚拟DOM标签中混入js表达式时要用{}
+      3. 样式的类名指定不要用class，要用className， 因为class是es6里面定义的类关键字，因此在jsx中要使用className
+      4. 内联样式，要用style={{ key: value }}的形式去写
+        - 最外层的花括号表示js表达式，里面的花括号表示一个对象，即键值对的集合，这样我们就可以理解value值是一个字符串了
+        - 一定要将jsx语法与html标签进行区分，jsx实际上是xml与js的结合，而xml是一种比json更早的使用标签进行数据存储的方式，一定不要单纯的以为jsx中的虚拟DOM就是html标签
+      5. 虚拟DOM必须只有一个根标签
+      6. 标签必须闭合
+      7. 虚拟DOM标签首字母
+        - 若小写字母开头，则将标签转为html中同名元素，若html中无该标签对应的同名元素，则报错；
+        - 若大写字母开头，react就去渲染对应的组件,若组件没有定义，则报错
+      8. 虚拟DOM中添加注释的方式
+        - 由于jsx中虚拟DOM的写法和html标签很像，因此有时候会想当然的认为在虚拟DOM标签中添加注释的方法与html中给标签添加注释的方法相同
+        - 但实际上由于虚拟DOM本质上是jsx语法，也就是js，所以在虚拟DOM中添加注释应该与js一致，即通过// 或者 /* *\/(此处\为转义字符) 来添加注释
+        - 但如果直接用// 或者 /* *\/(此处\为转义字符) 来添加注释会失效，甚至报错，此时发现jsx最基本的语法规则是虚拟DOM标签中混入js表达式时要用{}
+        - 因此作为js语法的// 或者 /* *\/(此处\为转义字符)被{}包裹即可添加注释，又因为// 作为单行注释，会将整行识别为注释内容，从而无法识别'}',因此最终采用{/**\/}的方式来添加注释
+        - 而另外一种方式就是在标签/组件内部直接使用 /* *\/来添加注释，属于jsx特殊语法范畴
+      */
+    </script>
+  </body>
+</html>
